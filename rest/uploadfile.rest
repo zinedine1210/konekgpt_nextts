@@ -1,0 +1,27 @@
+### Mapping Metadata
+# https://konekgpt.gnusa.id/service/dms/mapping/:id
+GET https://konekgpt.gnusa.id/service/dms/mapping/knowledgeImg HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AZ251c2EuaWQiLCJwYXNzd29yZCI6IjcyZGZhYjMzNWNlODIwYjkyZWRjMmEwN2RiMmMxZGQ0Y2FjYTU2MTMifQ.ceCFGSKxjDEH2jPVmICL3SjMu1-9rgLKnBOL1mPnWaQ
+
+
+### Upload
+POST https://konekgpt.gnusa.id/service/dms/rdb/uploadfile HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AZ251c2EuaWQiLCJwYXNzd29yZCI6IjcyZGZhYjMzNWNlODIwYjkyZWRjMmEwN2RiMmMxZGQ0Y2FjYTU2MTMifQ.ceCFGSKxjDEH2jPVmICL3SjMu1-9rgLKnBOL1mPnWaQ
+
+
+### Set Metadata
+# https://konekgpt.gnusa.id/service/dms/rdb/setmetadata/:UUID_FILE
+PUT https://konekgpt.gnusa.id/service/dms/rdb/setmetadata/asgasgas242141 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AZ251c2EuaWQiLCJwYXNzd29yZCI6IjcyZGZhYjMzNWNlODIwYjkyZWRjMmEwN2RiMmMxZGQ0Y2FjYTU2MTMifQ.ceCFGSKxjDEH2jPVmICL3SjMu1-9rgLKnBOL1mPnWaQ
+
+{
+    "doctype":"knowledgeImg",
+    "metadata":{
+        "Module":"knowledge",
+        "orgName":"GNUSA",
+        "Attachfield":"file_1",
+    }
+}

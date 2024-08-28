@@ -1,0 +1,252 @@
+##### START SECTION USER #####
+### LOGIN ACCOUNT
+POST https://konekgpt.gnusa.id/service/auth/login HTTP/1.1
+content-type: application/cbor
+uspw: {"user":"admin@gnusa.id","pass":"gnusa123"}
+
+# ### LOGIN MOBILE ACCOUNT
+# POST https://konekgpt.gnusa.id/service/auth/mlogin HTTP/1.1
+# content-type: application/cbor
+# uspw: {"user":"admin@gnusa.id","pass":"gnusa123"}
+
+
+### LOGOUT
+POST https://konekgpt.gnusa.id/service/auth/logout HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5udXB1c2F0QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMTY1NTVkODJiZjUwZDIyNjQxZDIxYjQ5NTE2MjY1MWJkNmYwZWNlOSJ9.klFv9-WHt1oAkMDwoPyIMDF45G3lV6jNcbACqIn6W34
+
+### CHECK STATUS TOKEN AUTH
+GET https://konekgpt.gnusa.id/service/auth/status HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5udXB1c2F0QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMTY1NTVkODJiZjUwZDIyNjQxZDIxYjQ5NTE2MjY1MWJkNmYwZWNlOSJ9.klFv9-WHt1oAkMDwoPyIMDF45G3lV6jNcbACqIn6W34
+param: user
+
+##### END SECTION USER #####
+
+##### section channel#####
+### insert channel
+POST https://konekgpt.gnusa.id/gpt-konek/channel HTTP/1.1
+content-type: application/cbor
+# code --> 1 = WA, 2 = TELEGRAM
+# identity --> jika seperti WA/TELE isinya nomor 08128492910, jika IG/TW @test
+
+{
+    "code": 1,
+    "name":"abdul",
+    "identity": "08128492910"
+}
+
+### update channel
+PUT https://konekgpt.gnusa.id/service/gpt-konek/channel/:id HTTP/1.1
+content-type: application/cbor
+# code --> 1 = WA, 2 = TELEGRAM
+# identity --> jika seperti WA/TELE isinya nomor 08128492910, jika IG/TW @test
+
+{
+    "code": 1,
+    "name":"abdul",
+    "identity": 08128492910
+}
+
+### delete channel
+DELETE https://konekgpt.gnusa.id/service/gpt-konek/channel HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AZ251c2EuaWQiLCJwYXNzd29yZCI6IjcyZGZhYjMzNWNlODIwYjkyZWRjMmEwN2RiMmMxZGQ0Y2FjYTU2MTMifQ.ceCFGSKxjDEH2jPVmICL3SjMu1-9rgLKnBOL1mPnWaQ
+
+["a2fpk21pska3"]
+
+### get channel
+GET https://konekgpt.gnusa.id/service/gpt-konek/channel HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AZ251c2EuaWQiLCJwYXNzd29yZCI6IjcyZGZhYjMzNWNlODIwYjkyZWRjMmEwN2RiMmMxZGQ0Y2FjYTU2MTMifQ.ceCFGSKxjDEH2jPVmICL3SjMu1-9rgLKnBOL1mPnWaQ
+
+### get one channel
+GET https://konekgpt.gnusa.id/service/gpt-konek/channel/:id HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AZ251c2EuaWQiLCJwYXNzd29yZCI6IjcyZGZhYjMzNWNlODIwYjkyZWRjMmEwN2RiMmMxZGQ0Y2FjYTU2MTMifQ.ceCFGSKxjDEH2jPVmICL3SjMu1-9rgLKnBOL1mPnWaQ
+##### end section channel #####
+
+##### section knowledge #####
+### insert knowledge
+POST https://konekgpt.gnusa.id/service/gpt-konek/knowledge HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AZ251c2EuaWQiLCJwYXNzd29yZCI6IjcyZGZhYjMzNWNlODIwYjkyZWRjMmEwN2RiMmMxZGQ0Y2FjYTU2MTMifQ.ceCFGSKxjDEH2jPVmICL3SjMu1-9rgLKnBOL1mPnWaQ
+
+# type_training --> 1 = Upload File, 2 = Website, 4 = Scratch
+
+#ex if type_training == 1
+{
+    "type_training": 1,
+    "name": "Upload PDF",
+    "code": "codeNameOfData",
+    "description":  "tes training",
+    "_files": ["21965632-a28f-46c4-b775-234a933724ef", "92965632-a28f-46c4-b775-734a933724ef"] //multiple file id
+}
+
+#ex if type_training == 2
+{
+    "type_training": 2,
+    "name": "Dokumentasi Website Gnusa",
+    "code": "codeNameOfData",
+    "description":  "tes training",
+    "url":"https://gnusa.id"
+}
+
+#ex if type_training == 4
+{
+    "type_training": 4,
+    "name": "Profile Sarah",
+    "code": "codeNameOfData",
+    "description":  "tes training",
+    "text": "Nama: Sarah Putri Tanggal Lahir: 12 Februari 1995 Alamat: Jl. Melati Indah No. 17, Jakarta HP: 0812-3456-7890 Hobi: Membaca, bersepeda, dan memasak Deskripsi Singkat: Sarah Putri adalah seorang wanita muda yang lahir dan besar di Jakarta. Ia memiliki minat yang tinggi dalam membaca buku-buku fiksi dan nonfiksi. Selain itu, dia juga menyukai kegiatan bersepeda di akhir pekan untuk menjaga kebugaran tubuhnya. Sarah juga memiliki keterampilan memasak yang baik dan sering bereksperimen dengan resep-resep baru. Dia adalah seseorang yang ceria, ramah, dan mudah bergaul dengan orang lain."
+}
+
+### update knowledge
+PUT https://konekgpt.gnusa.id/service/gpt-konek/knowledge/:id HTTP/1.1
+content-type: application/cbor
+{
+    "name":"My Knowledge 123",
+    "code": "codeNameOfData",
+    "description":""
+}
+
+### delete knowledge
+DELETE https://konekgpt.gnusa.id/service/gpt-konek/knowledge HTTP/1.1
+content-type: application/cbor
+["a2fpk21pska3"]
+
+### get knowledge
+GET https://konekgpt.gnusa.id/service/gpt-konek/knowledge HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AZ251c2EuaWQiLCJwYXNzd29yZCI6IjcyZGZhYjMzNWNlODIwYjkyZWRjMmEwN2RiMmMxZGQ0Y2FjYTU2MTMifQ.ceCFGSKxjDEH2jPVmICL3SjMu1-9rgLKnBOL1mPnWaQ
+
+### get one knowledge
+GET https://konekgpt.gnusa.id/service/gpt-konek/knowledge/61b1b2cf-1121-4b15-a98b-651fc422ece9 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AZ251c2EuaWQiLCJwYXNzd29yZCI6IjcyZGZhYjMzNWNlODIwYjkyZWRjMmEwN2RiMmMxZGQ0Y2FjYTU2MTMifQ.ceCFGSKxjDEH2jPVmICL3SjMu1-9rgLKnBOL1mPnWaQ
+
+### simulation knowledge
+POST https://konekgpt.gnusa.id/service/gpt-konek/knowledge/simulation HTTP/1.1
+content-type: application/cbor
+{
+    "file_id": "d5f07265-4cbe-4bae-aa62-196ae5a84815",
+    "text": "apa itu website gnusa?"
+}
+
+##### end section knowledge #####
+
+# ### get all file/resource 
+# # https://glibrary.gnusa.id/glb/resource/{usrId}
+# # pagination https://glibrary.gnusa.id/glb/resource/{usrId}?start=0&count=20
+# # if not using start and count, default is 20 data
+# POST https://graph.facebook.com/v2/message/webhook HTTP/1.1
+# content-type: application/json
+
+
+# ### post request
+# # https://konekgpt.gnusa.id/service/gpt-konek/request
+# POST https://konekgpt.gnusa.id/service/gpt-konek/request HTTP/1.1
+# content-type: application/json
+
+# {
+#     "text":"halo",
+#     "hp":"081321",
+#     "username":"nama"
+# }
+
+### GET LIST FILES KNOWLEDGE
+GET https://konekgpt.gnusa.id/service/gpt-konek/knowledge/list-files HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AZ251c2EuaWQiLCJwYXNzd29yZCI6IjcyZGZhYjMzNWNlODIwYjkyZWRjMmEwN2RiMmMxZGQ0Y2FjYTU2MTMifQ.ceCFGSKxjDEH2jPVmICL3SjMu1-9rgLKnBOL1mPnWaQ
+
+
+### GET INBOX BY ID KNOWLEDGE
+# https://konekgpt.gnusa.id/service/gpt-konek/inbox/:knowldegeId
+GET https://konekgpt.gnusa.id/service/gpt-konek/inbox/d700243e-b82c-4b5b-8c37-fbbad67d5261 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdudXNhLmlkIiwicGFzc3dvcmQiOiI3MmRmYWIzMzVjZTgyMGI5MmVkYzJhMDdkYjJjMWRkNGNhY2E1NjEzIn0.-NrC6YA6QnU7FV6BIzW2qq_AZueqrYkye5n3e-clr5U
+[
+{
+    "n": "msg",
+    "tf": 0,
+    "ti":[{
+        "o": "str"
+    }],
+    "notes": "pesan berupa text"
+},
+{
+    "n": "channel_identity",
+    "tf": 0,
+    "ti":[{
+        "o": "str"
+    }],
+    "notes": "diambil dari table channel field identity"
+},
+{
+    "n": "channel_name",
+    "tf": 0,
+    "ti":[{
+        "o": "str"
+    }],
+    "notes": "diambil dari table channel field name"
+},
+{
+    "n": "channel_code",
+    "tf": 0,
+    "ti":[{
+        "o": "str"
+    }],
+    "notes": "diambil dari table channel field code"
+},
+{
+    "n": "knowledge_id",
+    "tf": 0,
+    "ti":[{
+        "o": "str"
+    }],
+    "notes": "diambil dari table channel field knowledge_id"
+},
+{
+    "n": "user_id",
+    "tf": 0,
+    "ti":[{
+        "o": "str"
+    }],
+    "notes": "jika yang bertanya berarti valuenya identitas penanya seperti nmr hp, jika menjawab berarti valuenya bot"
+},
+{
+    "n": "user_name",
+    "tf": 0,
+    "ti":[{
+        "o": "str"
+    }],
+    "notes": "jika yang bertanya berarti valuenya identitas penanya seperti nama, jika menjawab berarti valuenya bot"
+},
+{
+    "n": "owner_id",
+    "tf": 0,
+    "ti":[{
+        "o": "str"
+    }],
+    "notes": "diambil dari tabel knowledge, owner dari knowledge tersebut, field user_id"
+},
+{
+    "n": "status",
+    "tf": 0,
+    "ti":[{
+        "o": "int"
+    }],
+    "notes": "jika status 0, maka pertanyaan belum di respons bot, jika 1 pertanyaan dapat dijawab, jika 2 pertanyaan tidak dapat dijawab"
+}]
+
+
+### select knowledge for channel
+POST https://konekgpt.gnusa.id/service/gpt-konek/channel/select-knowledge HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdudXNhLmlkIiwicGFzc3dvcmQiOiI3MmRmYWIzMzVjZTgyMGI5MmVkYzJhMDdkYjJjMWRkNGNhY2E1NjEzIn0.-NrC6YA6QnU7FV6BIzW2qq_AZueqrYkye5n3e-clr5U
+
+{
+    "knowledge_id": "xxx", //diambil dari knowledge id
+    "knowledge_name":"tes", //diambil dari knowledge id
+    "channel_id": "xxx" //id dari channel
+}

@@ -8,6 +8,7 @@ import { Notify } from '@@/src/utils/script';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import myImageLoader from '@@/src/utils/loader';
+import { G } from '@@/src/client/global.min.js'
 
 export default function LoginPage() {
   const [value, setValue] = useState({
@@ -18,12 +19,32 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const payload = {
-      userName: value.email,
-      password: value.password
-    }
+    // const payload = {
+    //   userName: value.email,
+    //   password: value.password
+    // }
+
+    let uus = G().enc(
+      JSON.stringify({
+        user: value.email,
+        pass: value.password,
+      }),
+      2,
+      6
+    );
+
+    const pwd = G()
+      .rndStr(uus.length, 1, 6)
+      .substring(0, uus.length)
+      .replace(/\W/g, "");
+
+    let payload = {
+      us: uus,
+      pass: pwd,
+    };
 
     const result: ResponseData = await tryLogin(payload)
+    console.log("page", result)
     if(result.success){
       Notify(result.message, 'success')
       Notify('Welcome Zinedine', 'info', 5000)

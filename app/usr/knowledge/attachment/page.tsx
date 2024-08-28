@@ -1,7 +1,7 @@
 'use client'
 import { useGlobalContext } from "@@/src/context/GlobalContext";
 import { useCallback, useEffect } from "react"
-import { tableDial } from "./lib/table";
+import { tableDial } from "@@/src/constant/table"
 import axios from "axios";
 import { DialList, StateType } from "@@/src/types/types";
 import Datatable from "../../components/Datatable/Datatable";

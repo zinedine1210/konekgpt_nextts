@@ -9,12 +9,11 @@ export async function POST(request: Request) {
   let timeoutId;
   const timoutInterval = 60000;
   let abortSignal = AbortSignal.timeout(timoutInterval)
-
-
   const requestPromise = await client('/auth/login', {
     method: 'POST',
-    headers: {},
-    body: payload
+    headers: {
+      uspw: JSON.stringify(payload)
+    }
   }, abortSignal)
 
   const timeoutPromise = new Promise((resolve, reject) => {
@@ -28,9 +27,15 @@ export async function POST(request: Request) {
     throw new Error("Timeout");
   }else{
     if(responseData?.status == 0){
+      if(!responseData.token) return NextResponse.json({
+        success: false,
+        data: null,
+        status: 404,
+        message: 'API dont generate token, please try again later'
+      })
       return NextResponse.json({
         success: true,
-        data: responseData.data,
+        data: responseData.data ?? { access_token: responseData.token },
         status: responseData.status,
         message: responseData.message,
       }, { status: 200 });

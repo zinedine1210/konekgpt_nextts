@@ -24,7 +24,8 @@ export interface StateType<T> {
     totalCount: number,
     payload: null,
     groupBy: string
-    onGet: (refresh?: boolean) => void
+    onGet: (refresh?: boolean) => void,
+    bulk?: DropdownOptions[]
 }
 
 export interface TableHeader {
@@ -34,11 +35,18 @@ export interface TableHeader {
     cssRow?: string
     copy?: string
     cssHead?: string
-    status?: string
+    status?: any | {[key: string]: string}
 }
 
 export interface DialList {
     code: string
     dial_code: string
     name: string
+}
+
+
+export interface DropdownOptions {
+    name: string
+    icon: string
+    action: (id: number | string, index: number) => void
 }

@@ -2,9 +2,10 @@ import { useGlobalContext } from "@@/src/context/GlobalContext"
 import Pagination from "./Pagination"
 import { useState } from "react"
 import { StateType } from "@@/src/types/types"
-import { displayListNumber } from "../../knowledge/attachment/lib/table"
+import { displayListNumber } from "../../../../src/constant/table"
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { Notify } from "@@/src/utils/script"
+import Dropdown from "../Partials/Dropdown"
 
 export default function Datatable({
     statename
@@ -116,9 +117,23 @@ export default function Datatable({
     const showingTo = display * page > totalCount ? totalCount: display * page
     
   return (
-    <>
-        <div className="relative overflow-x-auto">
-            <h1 className="mb-5 dark:text-white">Showing { showing } to { showingTo } of {totalCount} Entries</h1>
+    <div>
+        <div className={`${property.isLoading && 'pointer-events-none'} relative overflow-x-auto`}>
+            <div className="flex items-center justify-between mb-5 ">
+                <h1 className="dark:text-white">Showing { showing } to { showingTo } of {totalCount} Entries</h1>
+                <div className="flex items-center ">
+                    <h1 className=" dark:text-white">Display </h1>
+                    <select onChange={(e) => handleDisplay(Number(e.target.value))} name="display" id="displaySelect" className="bg-transparent px-2 outline-none">
+                        {
+                            displayListNumber.map((item, index) => {
+                                return (
+                                    <option className="dark:text-black" disabled={totalCount < item.value} key={index} value={item.value}>{item.label}</option>
+                                )
+                            })
+                        }
+                    </select>
+                </div>
+            </div>
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-xl">
                 <thead className="bg-white dark:bg-dark text-sm text-gray-700 uppercase dark:text-gray-400 rounded-xl">
 
@@ -147,6 +162,13 @@ export default function Datatable({
                                 )
                             })
                         }
+                        {
+                            property.bulk && (
+                                <th className={`px-5 py-4`}>
+                                    Bulk Action
+                                </th>
+                            )
+                        }
                     </tr>
                 </thead>
                 <tbody>
@@ -154,23 +176,23 @@ export default function Datatable({
                     {/* DATA LOOPING */}
                     {
                         property.isLoading && !data ?
-                            new Array(Number(display)).fill("anything").map((load, loadIndex) => {
+                            new Array(Number(display)).fill("loaders").map((load, loadIndex) => {
                                 return (
-                                    "sekeleton"
+                                    <SkeletonTable key={loadIndex} headers={headers} />
                                 )
                             })
                         :
                         data.length > 0 ?
-                            data.slice(showing, showingTo).map((item, key) => {
+                            data.slice(showing - 1, showingTo).map((item, key) => {
                                 return (
-                                    <tr key={key} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700  font-monospace odd:dark:bg-dark2 odd:bg-dark2 odd:bg-opacity-20 even:dark:bg-dark">
+                                    <tr key={key} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 odd:dark:bg-dark2 odd:bg-dark2 odd:bg-opacity-20 even:dark:bg-dark">
                                         {
                                             headers.map((head: any, headIndex) => {
                                                 return (
                                                     <td key={headIndex} onClick={() => handleCopy(item[head.copy], head.label, head.copy)} className={`px-5 py-4 ${head.cssRow} ${head.copy && "select-all"}`}>
                                                         { 
                                                             head.status ?
-                                                            <div style={{backgroundColor:`${head.status[item[head.property]]}`}} className={`text-center rounded-full my-1 text-xs py-1 px-4 w-fit text-white`}>
+                                                            <div style={{backgroundColor:`${head.status[item[head.property]]}`}} className={`text-center rounded-xl my-1 text-sm py-1.5 px-4 w-fit text-white font-bold`}>
                                                                 { item?.[head.property] }
                                                             </div>
                                                             :
@@ -179,6 +201,13 @@ export default function Datatable({
                                                     </td>
                                                 )
                                             })
+                                        }
+                                        {
+                                            property.bulk && (
+                                                <td className="relative">
+                                                    <Dropdown id={item.id} options={property.bulk}/>
+                                                </td>
+                                            )
                                         }
                                     </tr>
                                 )
@@ -198,23 +227,6 @@ export default function Datatable({
                 </tbody>
             </table>
         </div>
-        {/* <div className="xl:flex items-center justify-between mt-5 hidden">
-            <h1 className="text-sm text-cText dark:text-white">Showing { showing } to { showingTo } of {totalCount} Entries</h1>
-            <div className="flex items-center gap-5">
-                <div className="flex items-center ">
-                    <h1 className="text-sm text-cText dark:text-white">Display </h1>
-                    <select onChange={(e) => handleDisplay(Number(e.target.value))} name="display" id="displaySelect" className="bg-transparent px-2 outline-none">
-                        {
-                            displayListNumber.map((item, index) => {
-                                return (
-                                    <option className="dark:text-black" key={index} value={item.value}>{item.label}</option>
-                                )
-                            })
-                        }
-                    </select>
-                </div>
-            </div>
-        </div> */}
         <div className="mt-5">
             <Pagination
                 handleNext={handleNext} 
@@ -226,6 +238,24 @@ export default function Datatable({
                 pagerList={Math.ceil(totalCount/display)}
             />
         </div>
-    </>
+    </div>
   )
+}
+
+function SkeletonTable ({ headers }: {
+    headers: any[]
+}){
+    return (
+        <tr className="border-b dark:border-gray-700">
+            {
+                headers.map((head, index) => {
+                    return (
+                        <th key={index} className="px-5 py-1 blur-sm rounded-xl dark:bg-dark2 bg-zinc-200 select-none whitespace-nowrap">
+                            Lorem, ipsum dolor.
+                        </th>
+                    )
+                })
+            }
+        </tr>
+    )
 }

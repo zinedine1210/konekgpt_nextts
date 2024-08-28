@@ -1,7 +1,7 @@
 export interface OptionsClient {
-    body ?: string,
-    method: string,
-    headers: {[key: string]: any}
+    body ?: string | any,
+    method?: string,
+    headers?: {[key: string]: any}
 }
 
 export interface ResponseData {
