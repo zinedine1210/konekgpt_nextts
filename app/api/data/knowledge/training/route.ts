@@ -13,7 +13,6 @@ export async function GET(request: NextRequest) {
         XA: token?.value
       }
     }, abortSignal)
-  
     const timeoutPromise = new Promise((resolve, reject) => {
       timeoutId = setTimeout(() => {
         reject({ "status": -1, "data": "Timeout" });

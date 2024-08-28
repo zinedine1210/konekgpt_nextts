@@ -7,11 +7,12 @@ import Datatable from "../../components/Datatable/Datatable";
 import { getTraining } from "@@/src/hooks/CollectionAPI";
 import { TrainingType } from "./lib/types";
 import { TrainingDataModel } from "./lib/model";
+import { useRouter } from "next/navigation";
 
 export default function TrainingPage() {
   const { state, setState } = useGlobalContext();
   const statename = 'training'
-  
+  const router = useRouter()
 
   const initialMount = useCallback(async () => {
     const result = await getTraining()
@@ -36,16 +37,30 @@ export default function TrainingPage() {
       },
       bulk: [
         {
-          name: 'Delete',
-          icon: 'ph:trash',
+          name: 'Trained',
+          icon: 'material-symbols:model-training',
           action: (id, index) => {
-            console.log(id, index)
+            router.push(`/usr/knowledge/training/information/${id}`)
           }
-        }
+        },
+        {
+          name: 'Inbox',
+          icon: 'solar:inbox-broken',
+          action: (id, index) => {
+            router.push(`usr/inbox/${id}`)
+          }
+        },
+        {
+          name: 'Simulation AI',
+          icon: 'hugeicons:ai-chat-02',
+          action: (id, index) => {
+            alert('simulation'+id)
+          }
+        },
       ]
     }
     setState({ ...state, [statename]: { ...defaultValue, data: value, totalCount: total }})
-  }, [state, setState])
+  }, [state, setState, router])
 
   useEffect(() => {
     if(!state?.[statename]){

@@ -38,7 +38,7 @@ export default function Dropdown({ button, options, id }: {
             </button>
             
             {isOpen && (
-                <div className="absolute top-full right-0 backdrop-blur-md border shadow-lg rounded z-50 min-w-32 max-w-full w-full">
+                <div className="absolute top-full right-0 backdrop-blur-md border shadow-lg rounded z-50 min-w-44 max-w-96 w-full">
                     {
                         options.map((opt, index) => {
                             return (
