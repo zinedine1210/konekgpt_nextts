@@ -1,0 +1,950 @@
+### var
+
+@json = application/json
+@localHost = http://localhost:1899
+@devHost = https://gai.co.id/gai-ai-service
+@host = {{devHost}}
+@apiKey = eb7d28cc-40cd-4024-9171-09293c588bdb
+@ownerToken = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnbnVzYSIsImlkIjoiMDFKNTJRRTM2UlgzUUtGRzNZWjU0WEpXQjIiLCJyb2xlIjpbIkFETUlOIl0sImF1dGgiOiJPV05FUiIsImNvZGUiOiJyb290IiwiZXhwIjoxNzI0Mzk2MjE2fQ.NOqfW3Ljg80ZvQuoZwHtFY2gVsMjHYvgNXneAq-AbiA
+@partnerToken = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib3h5IiwiaWQiOiIwMUoyWllYTjJSWVlHSzc2TlNCUTJSV0owMiIsInJvbGUiOlsiQURNSU4iXSwiYXV0aCI6IlBBUlRORVIiLCJjb2RlIjoiYm94IiwiZXhwIjoxNzIxNDMzNTAyfQ.yomnaf9KczdgQEf7qBe4z3LU38uyZr4VO7kNOZxy7rU
+@clientToken = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZW1weSIsImlkIjoiMDFKNTJTWVZYRVQwSjZDS0JQVk05Wlo1M0oiLCJyb2xlIjpbIkFETUlOIl0sImF1dGgiOiJDTElFTlQiLCJjb2RlIjoidG1wIiwiZXhwIjoxNzI0ODIzNjc5fQ.bVGij6vBeuarzSai7PWEP5HeqiBJaKK6VEHS1rw53Iw
+@token = {{clientToken}}
+
+
+### test ==================================================================================================
+
+GET {{host}}/v1/test HTTP/1.1
+
+###
+
+GET {{host}}/v1/database/test HTTP/1.1
+authorization: {{token}}
+
+###
+
+POST {{host}}/v1/database/test/init_db/bxy HTTP/1.1
+authorization: {{token}}
+
+
+### auth ==================================================================================================
+
+### login owner
+
+POST {{host}}/v1/auth/login HTTP/1.1
+Accept: {{json}}
+content-type: {{json}}
+
+{
+  "userName": "gnusa",
+  "password": "123456"
+}
+
+### login partner
+
+POST {{host}}/v1/auth/login HTTP/1.1
+Accept: {{json}}
+content-type: {{json}}
+
+{
+  "userName": "boxy",
+  "password": "123456"
+}
+
+### login client
+
+POST {{host}}/v1/auth/login HTTP/1.1
+Accept: {{json}}
+content-type: {{json}}
+
+{
+  "userName": "tempy",
+  "password": "123456"
+}
+
+### register
+
+POST {{host}}/v1/auth/register HTTP/1.1
+Accept: {{json}}
+content-type: {{json}}
+
+{
+  "userName": "halo",
+  "password": "123456",
+  "email": "halo@gmail.com",
+  "phone": "62816112233"
+}
+
+
+### organization chart ====================================================================================
+
+### check is first running
+
+POST {{host}}/v1/root/org/isfisrtrun HTTP/1.1
+content-type: {{json}}
+
+
+### initialize application
+
+POST {{host}}/v1/root/org/init_application HTTP/1.1
+content-type: {{json}}
+
+{
+  "owner": {
+    "code": "root",
+    "name": "GNusa",
+    "legalName": "PT. GNusa",
+    "address": "",
+    "email": "gnusa@gmail.com",
+    "phone": "62811223344",
+    "npwp": "111111111111"
+  },
+  "user": {
+    "firstName": "gnusa",
+    "lastName": "",
+    "userName": "gnusa",
+    "password": "123456",
+    "email": "gnusa@gmail.com",
+    "phone": "62811223344",
+    "roles": ["ADMIN"],
+    "status": "ACTIVE"
+  }
+}
+
+### add new organization (partner)
+
+POST {{host}}/v1/root/org HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "org": {
+    "code": "box",
+    "name": "Boxy",
+    "legalName": "PT. Boxy Indonesia",
+    "address": "",
+    "email": "boxy@gmail.com",
+    "phone": "628152233101",
+    "npwp": "111111111111",
+    "channel": {}
+  },
+  "user": {
+    "firstName": "boxy",
+    "lastName": "",
+    "userName": "boxy",
+    "password": "123456",
+    "email": "boxy@gmail.com",
+    "phone": "628152233101",
+    "roles": ["ADMIN"],
+    "status": "ACTIVE"
+  }
+}
+
+### add new organization (client)
+
+POST {{host}}/v1/root/org HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "org": {
+    "code": "tmp",
+    "name": "Tempy",
+    "legalName": "PT. Tempy",
+    "address": "",
+    "email": "tempy@gmail.com",
+    "phone": "628152233201",
+    "npwp": "111111111111",
+    "channel": {}
+  },
+  "user": {
+    "firstName": "tempy",
+    "lastName": "",
+    "userName": "tempy",
+    "password": "123456",
+    "email": "tempy@gmail.com",
+    "phone": "628152233201",
+    "roles": ["ADMIN"],
+    "status": "ACTIVE"
+  }
+}
+
+### update organization
+
+PUT {{host}}/v1/root/org HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "id": "01J0F57YYV89TJZTEG9P64MFF1",
+  "name": "Herba Life",
+  "legalName": "PT. Herba Live",
+  "address": "jl. herba no 1",
+  "email": "herba@gmail.com",
+  "phone": "628142233442",
+  "npwp": "111111111111"
+}
+
+### find organization by id
+GET {{host}}/v1/root/org/id/01J52SSP071GNM8624YZWABTJW HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+Api-Key: {{apiKey}}
+
+### get client by code, name, phone, email, status, waNumber
+GET {{host}}/v1/root/org/by?phone=628152233201 HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+### change channel
+PUT {{host}}/v1/root/org/change_channels HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "id": "01J32H2329FYKZ01JK3E7JRTJF",
+  "channel": {
+    "whatsapp": ["628152233201","628152233202"],
+    "telegram": ["628152233203"],
+    "email": null
+  }
+}
+
+### get connection information fro client by organization code
+GET {{host}}/v1/root/org/database/tmp HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+### get connection information fro client by organization code
+GET {{host}}/v1/root/org/channel/628152233201 HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+### create new user
+POST {{host}}/v1/root/org/user HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "firstName": "Eyleen",
+  "lastName": "Li",
+  "userName": "eyleen2",
+  "password": "123456",
+  "email": "eyleen2@gmail.com",
+  "phone": "628112233451"
+}
+
+### find client user by id
+PUT {{host}}/v1/root/org/user HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "id": "01J0SZJ5F92V4MT86CM9S3JSAV",
+  "firstName": "Rogue",
+  "lastName": "Tiger"
+}
+
+### update username
+PUT {{host}}/v1/root/org/user/username HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "id": "01J0SZJ5F92V4MT86CM9S3JSAV",
+  "userName": "rogue"
+}
+
+### update email
+PUT {{host}}/v1/root/org/user/email HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "id": "01J0SZJ5F92V4MT86CM9S3JSAV",
+  "email": "rogue@gmail.com"
+}
+
+### update phone
+PUT {{host}}/v1/root/org/user/phone HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "id": "01J0SZJ5F92V4MT86CM9S3JSAV",
+  "phone": "62811223346"
+}
+
+### update roles
+PUT {{host}}/v1/root/org/user/roles HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "id": "01J0SZJ5F92V4MT86CM9S3JSAV",
+  "roles": ["USER","FINANCE"]
+}
+
+### update status
+PUT {{host}}/v1/root/org/user/status HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "id": "01J0SZJ5F92V4MT86CM9S3JSAV",
+  "status": "SUSPENDED"
+}
+
+### find user by id
+GET {{host}}/v1/root/org/user/id/01J0SZJ5F92V4MT86CM9S3JSAV HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+### find user by userName, email, phone, status, role
+GET {{host}}/v1/root/org/user/by?role=USER HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+### user change password
+PUT {{host}}/v1/user/changepassword HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "oldPassword": "123456",
+  "newPassword": "12345",
+  "verifyPassword": "12345"
+}
+
+### user password reset by admin
+PUT {{host}}/v1/user/resetpassword HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "id": "01J0HPE7H0JF1DEVXRBBK1TBP3",
+  "newPassword": "123456",
+  "verifyPassword": "123456"
+}
+
+
+### partner profile ==============================================================================================
+
+### get profile
+GET {{host}}/v1/partner/profile HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+### update profile
+PUT {{host}}/v1/partner/profile HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "name": "Boxy",
+  "legalName": "PT. Boxy",
+  "address": "jl. Boxy no 1",
+  "email": "boxy@gmail.com",
+  "phone": "62813223344",
+  "npwp": "111111111111"
+}
+
+
+### partner client =======================================================================================
+
+### add new organization (client)
+
+POST {{host}}/v1/partner/client HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "org": {
+    "code": "abp",
+    "name": "Add by Partner",
+    "legalName": "PT. Add by Partner",
+    "address": "",
+    "email": "abp@gmail.com",
+    "phone": "62817223345",
+    "npwp": "111111111111",
+    "channel": {}
+  },
+  "user": {
+    "firstName": "abp",
+    "lastName": "",
+    "userName": "abp",
+    "password": "123456",
+    "email": "abp@gmail.com",
+    "phone": "62817223345"
+  }
+}
+
+### update organization
+
+PUT {{host}}/v1/partner/client HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "id": "01J0F57YYV89TJZTEG9P64MFF1",
+  "name": "Herba Life",
+  "legalName": "PT. Herba Live",
+  "address": "jl. herba no 1",
+  "email": "herba@gmail.com",
+  "phone": "628142233442",
+  "npwp": "111111111111"
+}
+
+### find organization by id
+GET {{host}}/v1/partner/client/id/01J344KMXHCD04SNCRQTTEH66F HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+Api-Key: {{apiKey}}
+
+### get client by code, name, phone, email, status, waNumber
+GET {{host}}/v1/partner/client/by?status=ACTIVE HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+### change status
+PUT {{host}}/v1/partner/client/status HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "id": "01J116TYWGKWZ49X1R014VF649",
+  "status": "SUSPENDED"
+}
+
+
+### marketer =============================================================================================
+
+### add new salesman
+
+POST {{host}}/v1/root/marketer HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "firstName": "susan",
+  "lastName": "",
+  "userName": "susan",
+  "password": "123456",
+  "email": "susan@gmail.com",
+  "phone": "62813223345",
+  "newAcquisition": 50000,
+  "newAcqType": "N",
+  "usage": 1,
+  "usageType": "P"
+}
+
+### update organization
+
+PUT {{host}}/v1/partner/client HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "id": "01J0F57YYV89TJZTEG9P64MFF1",
+  "name": "Herba Life",
+  "legalName": "PT. Herba Live",
+  "address": "jl. herba no 1",
+  "email": "herba@gmail.com",
+  "phone": "628142233442",
+  "npwp": "111111111111"
+}
+
+### find organization by id
+GET {{host}}/v1/partner/client/id/01J116TYWGKWZ49X1R014VF649 HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+Api-Key: {{apiKey}}
+
+### get client by code, name, phone, email, status, waNumber
+GET {{host}}/v1/partner/client/by?status=ACTIVE HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+### change status
+PUT {{host}}/v1/partner/client/status HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "id": "01J116TYWGKWZ49X1R014VF649",
+  "status": "SUSPENDED"
+}
+
+
+### service template =====================================================================================
+
+### get service by id
+GET {{host}}/v1/services HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+### get services
+GET {{host}}/v1/services/id/qna HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+### get services by id, type, status
+GET {{host}}/v1/services/by?id=qna  HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+
+### database ==============================================================================================
+
+### create
+
+POST {{host}}/v1/database HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "host": "localhost",
+  "port": 5432,
+  "userName": "postgres",
+  "userPass": "password",
+  "dbName": "gai3",
+  "status": "ACTIVE"
+}
+
+### update
+
+PUT {{host}}/v1/database HTTP/1.1
+Accept: {{json}}
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "id": "01HSR0Z2XVDJWEETJM47HG7EF6",
+  "host": "localhost",
+  "port": 5432,
+  "userName": "postgres0",
+  "userPass": "password0",
+  "dbName": "iclient0"
+}
+
+### find by id
+
+GET {{host}}/v1/database/id/01HSR0Z2XVDJWEETJM47HG7EF6 HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+### fing by host, status
+
+GET {{host}}/v1/database/by?host=localhost HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+### change status
+
+PUT {{host}}/v1/database/status/01HSR1E5NJDB6YBV1R1X56654E/ACTIVE HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+### get active database
+
+GET {{host}}/v1/database/activedb HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+
+### client profile ==============================================================================================
+
+### get profile
+GET {{host}}/v1/client/profile HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+### update profile
+PUT {{host}}/v1/client/profile HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "name": "Boxy",
+  "legalName": "PT. Boxy",
+  "address": "jl. Boxy no 1",
+  "email": "boxy@gmail.com",
+  "phone": "62813223344",
+  "npwp": "111111111111"
+}
+
+
+### file ==================================================================================================
+
+### create
+POST {{host}}/v1/client/file HTTP/1.1
+authorization: {{token}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="files"; filename="binluh satresnarkoba baru.docx"
+Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+
+< /home/skyfy/Documents/polres/binluh satresnarkoba baru.docx
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="files"; filename="FOTO KEGIATAN RESMOB.docx"
+Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+
+< /home/skyfy/Documents/polres/FOTO KEGIATAN RESMOB.docx
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="files"; filename="KEGIATAN ANGGOTA KRIMSUS UNIT V.pdf"
+Content-Type: application/pdf
+
+< /home/skyfy/Documents/polres/KEGIATAN ANGGOTA KRIMSUS UNIT V.pdf
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="files"; filename="LAPORAN KEGIATAN UNIT 1 KAMNEG SAT RESKRIM POLRES METRO JAKARTA UTARA.docx"
+Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+
+< /home/skyfy/Documents/polres/LAPORAN KEGIATAN UNIT 1 KAMNEG SAT RESKRIM POLRES METRO JAKARTA UTARA.docx
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="files"; filename="Pemberitahuan Biaya PNBP.txt"
+Content-Type: text/plain
+
+< /home/skyfy/Documents/polres/Pemberitahuan Biaya PNBP.txt
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="files"; filename="PENANGANAN PERKARA DI HARDA.txt"
+Content-Type: text/plain
+
+< /home/skyfy/Documents/polres/PENANGANAN PERKARA DI HARDA.txt
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="files"; filename="PROSES PENERBITAN SKCK ONLINE.txt"
+Content-Type: text/plain
+
+< /home/skyfy/Documents/polres/PROSES PENERBITAN SKCK ONLINE.txt
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="files"; filename="SATRESNARKOBA KAPOLRES.docx"
+Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+
+< /home/skyfy/Documents/polres/SATRESNARKOBA KAPOLRES.docx
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="files"; filename="SOP TPTKP.txt"
+Content-Type: text/plain
+
+< /home/skyfy/Documents/polres/SOP TPTKP.txt
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+###
+curl {{host}}/v1/client/file/ \
+  -X POST \
+  -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW" \
+  -H "authorization: {{token}}" \
+  -F "files=@/home/skyfy/Documents/polres/binluh satresnarkoba baru.docx" \
+  -F "files=@/home/skyfy/Documents/polres/FOTO KEGIATAN RESMOB.docx \
+  -F "files=@/home/skyfy/Documents/polres/KEGIATAN ANGGOTA KRIMSUS UNIT V.pdf \
+  -F "files=@/home/skyfy/Documents/polres/LAPORAN KEGIATAN UNIT 1 KAMNEG SAT RESKRIM POLRES METRO JAKARTA UTARA.docx \
+  -F "files=@/home/skyfy/Documents/polres/Pemberitahuan Biaya PNBP.txt \
+  -F "files=@/home/skyfy/Documents/polres/PENANGANAN PERKARA DI HARDA.txt \
+  -F "files=@/home/skyfy/Documents/polres/PROSES PENERBITAN SKCK ONLINE.txt \
+  -F "files=@/home/skyfy/Documents/polres/SATRESNARKOBA KAPOLRES.docx \
+  -F "files=@/home/skyfy/Documents/polres/SOP TPTKP.txt \
+  -F "description=Description of the files"
+
+### find by id
+GET {{host}}/v1/client/file/id/01J582JF3Q1VYXEM3SJHAWAEZJ HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+### fing by originalFileName, status
+GET {{host}}/v1/client/file/by?originalFileName=Pemberitahuan Biaya PNBP.txt HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+### change status
+PUT {{host}}/v1/client/file/status HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "id": "01HTC8B9R0V79N0G3N78FWSBCJ",
+  "status": "INACTIVE"
+}
+
+### update file description
+PUT {{host}}/v1/client/file/description HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "id": "01J582JF3Q1VYXEM3SJHAWAEZJ",
+  "description": "Foto kegiatan RESMOB"
+}
+
+
+### training data =========================================================================================
+
+### create
+POST {{host}}/v1/client/data HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "description": "Polres Jakut",
+  "version": "240814",
+  "files": ["01J582HWVWKDR3RVP1BXTFZ0Z3", "01J582JF3Q1VYXEM3SJHAWAEZJ", "01J582JF3SW5H0B52YV9PZEC2X", "01J582JF3XDZPEVW5XYJG2BBRX", "01J582JF3YC1PG7W0NMBY5D8YA", "01J582JF3ZETHQ0V4YPHRY66FW", "01J582JF3ZB3K5DA3FKKRHBSG0", "01J582JF40S49NFDP450ANRZDM"]
+}
+
+### find by id
+GET {{host}}/v1/client/data/id/01J587TYFVAMCKKH8PFFG5B2NN HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+### fing by description, status
+GET {{host}}/v1/client/data/by?description=base HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+### change status
+PUT {{host}}/v1/client/data/status HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "id": "01HTK5QRVWBNEVM8BB05VT0BYE",
+  "status": "INACTIVE"
+}
+
+### update file description
+PUT {{host}}/v1/client/data/description HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "id": "01HTK7Z07EE45F8DRMXC2V2JE2",
+  "description": "Coba-coba"
+}
+
+### add answered unanswered question to knowledge base
+POST {{host}}/v1/client/data/unanswered HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "id": "01HTKF8FTDJ80M47JGFYNDS615",
+  "version": "20240506",
+  "unanswered": {
+    "channelId": "628133445501"
+  }
+}
+
+
+### service ===============================================================================================
+
+### create
+POST {{host}}/v1/client/service HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "type": "QNA",
+  "description": "Data Polres Jakut",
+  "serviceId": "qna",
+  "channelId": "628152233201",
+  "channel": "WHATAPPS",
+  "prompt": "prompt",
+  "properties": {
+    "data": "01J58DA5GD66ACCFWNM7TCCGXS"
+  },
+  "status": "ACTIVE"
+}
+
+### update
+PUT {{host}}/v1/client/service HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "id": "01HVGG9HZWX63TW4RP4T0J57Q1",
+  "description": "Test QnA dua",
+  "channelId": "628133445502",
+  "channel": "WHATAPPS",
+  "prompt": "prompt",
+  "properties": {
+    "data": "01HTKF8FWKXWFCDNV01R0TRFVJ"
+  }
+}
+
+### find by id
+GET {{host}}/v1/client/service/id/01HVG0WEP3ATMFRVCQFGYKCF1M HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+### fing by type, description, serviceId, channelId, channel, status
+GET {{host}}/v1/client/service/by?status=ACTIVE HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+### change status
+PUT {{host}}/v1/client/service/status HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "id": "01HVG0WEP3ATMFRVCQFGYKCF1M",
+  "status": "ACTIVE"
+}
+
+
+### chat ==================================================================================================
+
+### new chat
+POST {{host}}/v1/chat HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "channelId": "628152233201",
+  "channel": "WHATAPPS",
+  //"question": "what is cognitive search?"
+  //"question": "siapa presiden Indonesia ke 10?"
+  //"question": "Apakah Anda tahu LangChain?"
+  "question": "Apa persyaratan permohonan SKCK baru?"
+}
+
+### find by id
+GET {{host}}/v1/client/chat/id/01HVXKATWG0D178HP5Z68EZPJ7 HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+### fing by channelId, channel, subChannel, channelRef
+GET {{host}}/v1/client/chat/by?channel=WHATAPPS HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+
+### unanswered question ===================================================================================
+
+### new chat
+PUT {{host}}/v1/client/unanswered HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+{
+  "id": "01HWCNAXWQHDZ5ZW92P0PV159J",
+  "answer": "LangGraph is a library that provides a high-level abstraction for creating applications that involve multiple actors (such as users, agents, or characters) interacting with each other and with Large Language Models (LLMs). It extends the LangChain library, allowing you to coordinate multiple chains (or actors) across multiple steps of computation in a cyclic manner. Think of it as a tool that helps you build stateful, multi-actor workflows with LLMs."
+}
+
+### find by id
+GET {{host}}/v1/client/unanswered/id/01HWCNAXWQHDZ5ZW92P0PV159J HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+### fing by channelId, channel, subChannel, channelRef
+GET {{host}}/v1/client/unanswered/by?channelId=628133445501 HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+
+
+###
+
+### call AI generation
+
+POST http://202.149.86.235:11434/api/generate HTTP/1.1
+content-type: {{json}}
+
+{
+  "model": "mistral",
+  "prompt": "tell me a joke?"
+}
+
+### call AI completions
+
+POST http://202.149.86.235:11434/v1/chat/completions HTTP/1.1
+content-type: {{json}}
+
+{
+  "model": "mistral",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a helpful assistant."
+    },
+    {
+      "role": "user",
+      "content": "Hello!"
+    }
+  ]
+}
+
+### get success report by userId
+
+POST http://localhost:11434/v1/chat/completions HTTP/1.1
+content-type: {{json}}
+
+{
+  "model": "mistral",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a helpful assistant."
+    },
+    {
+      "role": "user",
+      "content": "Hello!"
+    }
+  ]
+}
+
+
+### LMS API ===============================================================================================
+
+POST {{host}}/lms/api/v1/import/template HTTP/1.1
+authorization: {{token}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="collectionName"
+
+products
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="products.xlsx"
+Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+
+< ./products.xlsx
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### forward to LMS
+
+GET {{host}}/lms/api/v2/loyalty/member/by HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+### tidak jalan
+
+curl {{host}}/lms/api/v1/import/template \
+    -X POST \
+    -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW" \
+    -H "authorization: {{token}}" \
+    -F "collectionName=products" \
+    -F "file=@/home/skyfy/working/test/loyalty-client/products.xlsx"
+
+### tidak jalan
+
+@boundary="----WebKitFormBoundary7MA4YWxkTrZu0gW"
+@file_path="/home/skyfy/Data/products.xlsx"
+
+curl {{host}}/lms/api/v1/import/template \
+  -X POST \
+  -H "authorization: {{token}}" \
+  -H "Content-Type: multipart/form-data; boundary=--{{boundary}}" \
+  -d "--{{boundary}}\r\nContent-Disposition: form-data; name=\"collectionName\"\r\n\r\nproducts\r\n--{{boundary}}\r\nContent-Disposition: form-data; name=\"file\"; filename=\"products.xlsx\"\r\nContent-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet\r\n\r\n$(cat ${file_path})\r\n--{{boundary}}--" 
+  
+###
+
+### forward to LMS-doc
+
+GET {{host}}/v3/api-docs/lms-doc HTTP/1.1
+content-type: {{json}}
+authorization: {{token}}
+
+
+
+
+
+
+
+
+
